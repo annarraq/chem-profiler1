@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ХИМИЧЕСКИЙ ПРОФАЙЛЕР</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <button class="theme-btn" id="themeBtn">🌙</button>
+
+  <div class="app">
+
+    <!-- СТАРТ -->
+    <section class="screen active" id="screen-start">
+      <div class="logo">⚗️</div>
+      <h1>ХИМИЧЕСКИЙ<br>ПРОФАЙЛЕР</h1>
+      <p class="subtitle">15 вопросов · 16 типов · 3 минуты</p>
+      <p class="description">
+        Ответь на 15 вопросов — узнай, какой ты химик.
+        Вопросы выбираются случайно из банка в 100 штук — каждый раз новые.
+      </p>
+
+      <div class="collection-mini" id="collectionMini">
+        <p class="collection-label">Открыто типов: <b id="collectedCount">0</b> / 16</p>
+        <div class="collection-icons" id="collectionIcons"></div>
+      </div>
+
+      <div class="start-actions">
+        <button class="primary" id="startBtn">Начать →</button>
+        <button class="secondary" id="duelBtn">⚔️ Дуэль</button>
+        <button class="secondary" id="historyBtn">📜 История</button>
+      </div>
+    </section>
+
+    <!-- ИСТОРИЯ -->
+    <section class="screen" id="screen-history">
+      <h2>История прохождений</h2>
+      <div class="history-list" id="historyList"></div>
+      <button class="secondary" id="backFromHistory">← Назад</button>
+    </section>
+
+    <!-- ДУЭЛЬ — ЭКРАН 1 -->
+    <section class="screen" id="screen-duel-intro">
+      <h2>⚔️ ДУЭЛЬ</h2>
+      <p class="description">
+        Два игрока на одном устройстве. Сначала первый отвечает на 15 вопросов,
+        потом второй. В конце — сравнение профилей.
+      </p>
+      <div class="duel-inputs">
+        <input type="text" id="player1Name" placeholder="Имя игрока 1" maxlength="15">
+        <input type="text" id="player2Name" placeholder="Имя игрока 2" maxlength="15">
+      </div>
+      <button class="primary" id="duelStartBtn">Начать дуэль</button>
+      <button class="secondary" id="backFromDuel">← Назад</button>
+    </section>
+
+    <!-- ВОПРОСЫ -->
+    <section class="screen" id="screen-quiz">
+      <div class="quiz-header">
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="quiz-meta">
+          <span>Вопрос <span id="qCurrent">1</span> / <span id="qTotal">15</span></span>
+          <span>⏱ <b id="timerDisplay">00:00</b></span>
+          <span>Очки: <b id="scoreDisplay">0</b></span>
+        </div>
+        <p class="player-badge" id="playerBadge" style="display:none"></p>
+      </div>
+      <div id="questionWrap">
+        <h2 class="question-text" id="questionText">...</h2>
+        <div class="answers" id="answers"></div>
+      </div>
+    </section>
+
+    <!-- РЕЗУЛЬТАТ -->
+    <section class="screen" id="screen-result">
+      <div class="confetti" id="confetti"></div>
+      <div class="result-header">
+        <div class="result-icon" id="resultIcon">⚗️</div>
+        <p class="result-label">Твой тип</p>
+        <h1 id="resultType">...</h1>
+        <p class="rarity" id="rarityText"></p>
+        <p class="result-desc" id="resultDesc">...</p>
+        <div class="result-score">
+          Очков: <b id="finalScore">0</b> · Точность: <b id="finalAccuracy">0%</b> · Время: <b id="finalTime">0:00</b>
+        </div>
+      </div>
+
+      <div class="radar-wrapper">
+        <svg viewBox="0 0 300 300" class="radar" id="radar">
+          <g transform="translate(150,150)">
+            <polygon points="0,-120 120,0 0,120 -120,0"
+                     fill="none" stroke="rgba(125,211,252,0.15)" stroke-width="1"/>
+            <polygon points="0,-90 90,0 0,90 -90,0"
+                     fill="none" stroke="rgba(125,211,252,0.1)" stroke-width="1"/>
+            <polygon points="0,-60 60,0 0,60 -60,0"
+                     fill="none" stroke="rgba(125,211,252,0.08)" stroke-width="1"/>
+            <line x1="-120" y1="0" x2="120" y2="0" stroke="rgba(125,211,252,0.1)"/>
+            <line x1="0" y1="-120" x2="0" y2="120" stroke="rgba(125,211,252,0.1)"/>
+            <polygon id="radarPolygon" points="0,0 0,0 0,0 0,0"
+                     fill="rgba(125,211,252,0.35)" stroke="#7dd3fc" stroke-width="2"
+                     style="transition: all 1.2s ease;"/>
+            <text x="0" y="-135" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="600">ТЕОРИЯ</text>
+            <text x="135" y="4" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="600">АНАЛИЗ</text>
+            <text x="0" y="142" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="600">МИКРО</text>
+            <text x="-135" y="4" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="600">РИСК</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="scales" id="scales"></div>
+
+      <div class="achievements">
+        <h3>🏆 Достижения</h3>
+        <div class="achievements-grid" id="achievementsGrid"></div>
+      </div>
+
+      <div class="careers">
+        <h3>Кем ты можешь стать</h3>
+        <ul id="careersList"></ul>
+      </div>
+
+      <div class="famous">
+        <h3>Похожие учёные</h3>
+        <p id="famousText"></p>
+      </div>
+
+      <div class="recommendations" id="recommendationsBox">
+        <h3>📚 Что тебе подойдёт</h3>
+        <div class="rec-grid" id="recGrid"></div>
+      </div>
+
+      <div class="result-actions">
+        <button class="primary" id="shareBtn">📤 Поделиться</button>
+        <button class="secondary" id="restartBtn">Пройти заново</button>
+      </div>
+    </section>
+
+    <!-- РЕЗУЛЬТАТ ДУЭЛИ -->
+    <section class="screen" id="screen-duel-result">
+      <div class="confetti" id="confettiDuel"></div>
+      <h2 style="text-align:center; color:#7dd3fc; margin-bottom: 30px;">⚔️ РЕЗУЛЬТАТ ДУЭЛИ</h2>
+
+      <div class="duel-cards">
+        <div class="duel-card" id="duelCard1">
+          <div class="duel-icon" id="duelIcon1">⚗️</div>
+          <div class="duel-name" id="duelName1">Игрок 1</div>
+          <div class="duel-type" id="duelType1"></div>
+          <div class="duel-score" id="duelScore1"></div>
+        </div>
+        <div class="duel-vs">VS</div>
+        <div class="duel-card" id="duelCard2">
+          <div class="duel-icon" id="duelIcon2">⚗️</div>
+          <div class="duel-name" id="duelName2">Игрок 2</div>
+          <div class="duel-type" id="duelType2"></div>
+          <div class="duel-score" id="duelScore2"></div>
+        </div>
+      </div>
+
+      <div class="duel-verdict" id="duelVerdict"></div>
+      <div class="duel-comparison" id="duelComparison"></div>
+
+      <button class="primary" id="duelRestart" style="margin-top: 30px;">Ещё дуэль</button>
+    </section>
+
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="profiles.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

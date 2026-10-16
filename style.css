@@ -1,0 +1,312 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0c12;
+  --text: #e8eaf0;
+  --accent: #7dd3fc;
+  --accent2: #38bdf8;
+  --card: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.1);
+  --muted: rgba(255,255,255,0.5);
+}
+
+body.light {
+  --bg: #f5f7fa;
+  --text: #0a0c12;
+  --accent: #0284c7;
+  --accent2: #0369a1;
+  --card: rgba(0,0,0,0.03);
+  --border: rgba(0,0,0,0.1);
+  --muted: rgba(0,0,0,0.5);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen { display: none; width: 100%; }
+.screen.active { display: block; animation: fadeUp 0.5s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Тема */
+.theme-btn {
+  position: fixed; top: 20px; right: 20px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--card); border: 1px solid var(--border);
+  font-size: 18px; cursor: pointer; z-index: 100;
+  transition: all 0.3s;
+}
+.theme-btn:hover { transform: scale(1.1); background: rgba(125,211,252,0.15); }
+
+/* Старт */
+.logo { font-size: 64px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+#screen-start h1 {
+  font-size: 52px; line-height: 1.05;
+  letter-spacing: 2px; color: var(--accent); margin-bottom: 16px;
+}
+
+.subtitle { font-size: 16px; opacity: 0.6; margin-bottom: 24px; letter-spacing: 1px; }
+.description { font-size: 14px; line-height: 1.7; opacity: 0.6; margin-bottom: 30px; max-width: 520px; }
+
+/* Коллекция */
+.collection-mini {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px 20px;
+  margin-bottom: 30px;
+}
+.collection-label { font-size: 13px; opacity: 0.6; letter-spacing: 1px; margin-bottom: 12px; }
+.collection-label b { color: var(--accent); }
+.collection-icons {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.collection-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  filter: grayscale(1); opacity: 0.3;
+  transition: all 0.3s;
+}
+.collection-icon.unlocked {
+  filter: none; opacity: 1;
+  background: rgba(125,211,252,0.12);
+  border-color: var(--accent);
+}
+.collection-icon:hover { transform: scale(1.15); }
+
+.start-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Кнопки */
+.primary, .secondary {
+  border: none; padding: 16px 32px; border-radius: 12px;
+  font-size: 15px; font-weight: 700; letter-spacing: 1px;
+  cursor: pointer; font-family: inherit; transition: all 0.25s;
+  margin: 6px 6px 6px 0;
+}
+.primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; }
+.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(125,211,252,0.3); }
+.secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.secondary:hover { background: rgba(125,211,252,0.1); border-color: var(--accent); }
+
+/* История */
+#screen-history h2 { font-size: 32px; color: var(--accent); margin-bottom: 30px; }
+.history-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+.history-item {
+  background: var(--card); border: 1px solid var(--border);
+  padding: 16px 20px; border-radius: 12px;
+}
+.history-item .type { font-weight: 600; color: var(--accent); }
+.history-item .date { font-size: 12px; opacity: 0.5; margin-top: 4px; }
+
+/* Дуэль — интро */
+#screen-duel-intro h2 { font-size: 32px; color: var(--accent); margin-bottom: 20px; }
+.duel-inputs { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+.duel-inputs input {
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); padding: 14px 18px; border-radius: 12px;
+  font-family: inherit; font-size: 15px;
+}
+.duel-inputs input:focus { outline: none; border-color: var(--accent); }
+
+/* Вопросы */
+.quiz-header { margin-bottom: 40px; }
+.progress {
+  height: 4px; background: rgba(255,255,255,0.08);
+  border-radius: 2px; overflow: hidden; margin-bottom: 12px;
+  position: relative;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  width: 0%;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 12px rgba(125,211,252,0.6);
+  position: relative; overflow: hidden;
+}
+.progress-bar::after {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: shine 2s infinite;
+}
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.quiz-meta {
+  display: flex; justify-content: space-between;
+  font-size: 12px; letter-spacing: 2px;
+  text-transform: uppercase; opacity: 0.6;
+  flex-wrap: wrap; gap: 10px;
+}
+.quiz-meta b { color: var(--accent); }
+
+.player-badge {
+  margin-top: 16px; font-size: 14px; color: var(--accent);
+  letter-spacing: 1px; font-weight: 600;
+}
+
+#questionWrap { transition: opacity 0.25s, transform 0.25s; }
+#questionWrap.leaving { opacity: 0; transform: translateX(-40px); }
+#questionWrap.entering { opacity: 0; transform: translateX(40px); }
+
+.question-text { font-size: 22px; line-height: 1.4; margin-bottom: 36px; font-weight: 500; min-height: 90px; }
+
+.answers { display: flex; flex-direction: column; gap: 12px; }
+.answer {
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); padding: 16px 22px; border-radius: 12px;
+  font-size: 14px; text-align: left; cursor: pointer;
+  font-family: inherit; transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.answer:hover { background: rgba(125,211,252,0.1); border-color: var(--accent); transform: translateX(6px); }
+.answer.selected { background: rgba(125,211,252,0.25); border-color: var(--accent); transform: translateX(6px); }
+.answer.selected::after {
+  content: '✓'; position: absolute; right: 20px; top: 50%;
+  transform: translateY(-50%); color: var(--accent); font-weight: 700;
+}
+
+/* Результат */
+.result-header { text-align: center; margin-bottom: 40px; position: relative; }
+.result-icon { font-size: 72px; margin-bottom: 16px; animation: pop 0.6s ease; }
+@keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+.result-label { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+#resultType { font-size: 36px; color: var(--accent); margin-bottom: 8px; letter-spacing: 1px; line-height: 1.15; }
+
+.rarity {
+  display: inline-block;
+  background: rgba(251,191,36,0.15);
+  border: 1px solid rgba(251,191,36,0.4);
+  color: #fbbf24;
+  padding: 6px 14px; border-radius: 20px;
+  font-size: 12px; font-weight: 600; letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.result-desc { font-size: 15px; opacity: 0.8; line-height: 1.6; max-width: 520px; margin: 0 auto 16px; }
+.result-score { font-size: 13px; opacity: 0.6; letter-spacing: 1px; }
+.result-score b { color: var(--accent); }
+
+.radar-wrapper { display: flex; justify-content: center; margin: 40px 0; }
+.radar { width: 300px; height: 300px; }
+
+.scales { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+.scale { padding: 16px; background: var(--card); border-radius: 12px; }
+.scale-name { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+.scale-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+.scale-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1s ease; }
+.scale-value { font-size: 12px; font-weight: 600; color: var(--accent); }
+
+/* Достижения */
+.achievements, .careers, .famous, .recommendations { margin-bottom: 30px; }
+.achievements h3, .careers h3, .famous h3, .recommendations h3 {
+  font-size: 12px; letter-spacing: 2px;
+  text-transform: uppercase; opacity: 0.5; margin-bottom: 14px;
+}
+.achievements-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.achievement {
+  background: rgba(125,211,252,0.1);
+  border: 1px solid rgba(125,211,252,0.3);
+  padding: 8px 14px; border-radius: 20px;
+  font-size: 13px; color: var(--accent);
+  animation: pop 0.4s ease;
+}
+.achievement.locked {
+  background: rgba(255,255,255,0.03);
+  border-color: var(--border);
+  color: rgba(255,255,255,0.3);
+  filter: grayscale(1);
+}
+
+.careers ul { list-style: none; }
+.careers li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 15px; }
+.careers li::before { content: '→ '; color: var(--accent); margin-right: 8px; }
+
+.famous p { font-size: 14px; line-height: 1.7; opacity: 0.8; }
+
+/* Рекомендации */
+.rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rec-block {
+  background: var(--card); border: 1px solid var(--border);
+  padding: 14px 16px; border-radius: 12px;
+}
+.rec-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.5; margin-bottom: 8px; }
+.rec-block ul { list-style: none; }
+.rec-block li { font-size: 13px; padding: 4px 0; opacity: 0.85; }
+.rec-block li::before { content: '· '; color: var(--accent); }
+
+.result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
+
+/* Конфетти */
+.confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+.confetti-piece {
+  position: absolute; width: 8px; height: 8px;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall {
+  0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Дуэль — результат */
+.duel-cards {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; margin-bottom: 30px; flex-wrap: wrap;
+}
+.duel-card {
+  flex: 1; min-width: 200px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px; text-align: center;
+}
+.duel-icon { font-size: 56px; margin-bottom: 8px; }
+.duel-name { font-size: 13px; opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.duel-type { font-size: 18px; color: var(--accent); font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+.duel-score { font-size: 13px; opacity: 0.7; }
+.duel-vs {
+  font-size: 24px; font-weight: 900;
+  color: var(--accent); letter-spacing: 4px;
+}
+
+.duel-verdict {
+  text-align: center; font-size: 22px;
+  color: var(--accent); font-weight: 700;
+  margin-bottom: 24px; letter-spacing: 1px;
+}
+
+.duel-comparison {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px;
+}
+.duel-comparison h4 {
+  font-size: 12px; text-transform: uppercase;
+  letter-spacing: 2px; opacity: 0.5; margin-bottom: 14px;
+}
+.duel-comparison p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+.duel-comparison p b { color: var(--accent); }
+
+body.light .progress-bar::after { background: linear-gradient(90deg, transparent, rgba(0,0,0,0.2), transparent); }
